@@ -38,7 +38,7 @@ function App() {
 
     return (
     <>
-    <NavigationBar/>
+    { window.location.pathname !== "/login" && <NavigationBar/> /* Solo aparece la barra de navegación si se está en el apartado de iniciar sesión */ }
     <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home/>} />

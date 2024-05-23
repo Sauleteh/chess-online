@@ -51,6 +51,8 @@ function Login() {
         <label>PIN</label><input id="pin"/><br/>
         <button onClick={sendUser}>Entrar</button><br/>
         <label id="status">Pulsa el botón para continuar...</label>
+        <br/><br/>
+        <label>Nota: Mientras existan tableros activos a tu nombre, tu cuenta se mantendrá en el servidor para que nadie toque tu partida pendiente.<br/>Cuando te vayas y no existan tableros en los que participes, tu cuenta se borrará.</label>
         </>
     )
 }
