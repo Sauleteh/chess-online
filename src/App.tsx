@@ -1,35 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Home from "./pages/Home.tsx"
+import NoPage from "./pages/NoPage.tsx"
+import Login from "./pages/Login.tsx";
+import socket from "./WebSocket.tsx";
+import * as Constants from "./Constants.ts";
+import NavigationBar from "./components/NavigationBar.tsx";
 
 function App() {
-  const [count, setCount] = useState(0)
+    socket.onopen = function () {
+        console.log("Connected to WebSocket server");
 
-  return (
+        if (window.location.pathname !== "/login" &&
+        (localStorage.getItem(Constants.STORAGE_KEYS.USERNAME) === null || localStorage.getItem(Constants.STORAGE_KEYS.PIN) === null ||
+        localStorage.getItem(Constants.STORAGE_KEYS.USERNAME) === undefined || localStorage.getItem(Constants.STORAGE_KEYS.PIN) === undefined ||
+        localStorage.getItem(Constants.STORAGE_KEYS.USERNAME) === "" || localStorage.getItem(Constants.STORAGE_KEYS.PIN) === "")) {
+            // Si no hay usuario en el almacenamiento local estando en cualquier página que no sea la de login, redirigir a la página de login
+            window.location.href = "/login";
+        }
+        else if (localStorage.getItem(Constants.STORAGE_KEYS.USERNAME) !== null && localStorage.getItem(Constants.STORAGE_KEYS.PIN) !== null &&
+        localStorage.getItem(Constants.STORAGE_KEYS.USERNAME) !== undefined && localStorage.getItem(Constants.STORAGE_KEYS.PIN) !== undefined &&
+        localStorage.getItem(Constants.STORAGE_KEYS.USERNAME) !== "" && localStorage.getItem(Constants.STORAGE_KEYS.PIN) !== "") {
+            // Si ya hay usuario en el almacenamiento local, comprobamos que sea válido
+            const message = JSON.stringify({
+                type: "login",
+                name: localStorage.getItem(Constants.STORAGE_KEYS.USERNAME),
+                pin: localStorage.getItem(Constants.STORAGE_KEYS.PIN),
+                content: null
+            });
+            socket.send(message); // El mensaje que se reciba será procesado en la página en la que se esté en ese momento
+        }
+    };
+
+    socket.onclose = function (event) {
+        console.log(`Disconnected with event code: ${event.code}`);
+    };
+
+    return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <NavigationBar/>
+    <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home/>} />
+                <Route path="/login" element={<Login/>} />
+                <Route path="*" element={<NoPage/>} />
+            </Routes>
+    </BrowserRouter>
     </>
-  )
+    )
 }
 
 export default App
