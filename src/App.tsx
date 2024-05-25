@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./pages/Home.tsx"
 import NoPage from "./pages/NoPage.tsx"
 import Login from "./pages/Login.tsx";
+import InGame from "./pages/InGame.tsx";
 import socket from "./WebSocket.tsx";
 import * as Constants from "./Constants.ts";
 import NavigationBar from "./components/NavigationBar.tsx";
@@ -43,6 +44,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home/>} />
                 <Route path="/login" element={<Login/>} />
+                <Route path="/board/:id" element={<InGame/>} />
                 <Route path="*" element={<NoPage/>} />
             </Routes>
     </BrowserRouter>

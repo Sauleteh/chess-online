@@ -10,7 +10,7 @@ function NavigationBar() {
 
     return (
         <div className="topnav">
-            <a className="active" href="/">Página principal</a>
+            <a className="active" href="/">Inicio</a>
             <a onClick={handleLogout}>Cerrar sesión</a>
         </div>
     )
