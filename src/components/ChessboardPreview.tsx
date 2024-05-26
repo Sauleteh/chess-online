@@ -6,12 +6,17 @@ interface ChessboardPreviewProps {
 }
 
 function ChessboardPreview({ boardInfo }: ChessboardPreviewProps) {
-  return (
+    function joinGame() {
+        console.log("Unirse a la partida " + boardInfo.id);
+        window.location.href = "/board/" + boardInfo.id;
+    }
+
+    return (
     <div>
-        <label>Tablero de ajedrez {boardInfo.black}</label>
-        <button>Unirse</button>
+        <label>Tablero de ajedrez {boardInfo.white} {boardInfo.black}</label>
+        <button onClick={joinGame}>Unirse</button>
     </div>
-  );
+    );
 }
 
 export default ChessboardPreview;
