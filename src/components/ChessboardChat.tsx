@@ -1,6 +1,6 @@
-import "./ChessboardChat.css"
+import "./css/ChessboardChat.css"
 import socket from "../WebSocket.tsx"
-import * as Constants from "../Constants.ts"
+import * as Constants from "../utils/Constants.ts"
 import { ChatMessage } from "../types/ChatMessage.ts"
 
 interface ChessboardChatProps {

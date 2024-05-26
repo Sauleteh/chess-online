@@ -1,5 +1,5 @@
 import { BoardInfo } from "../types/BoardInfo.ts";
-import "./ChessboardPreview.css";
+import "./css/ChessboardPreview.css";
 
 interface ChessboardPreviewProps {
     boardInfo: BoardInfo;

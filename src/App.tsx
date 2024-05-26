@@ -5,7 +5,7 @@ import NoPage from "./pages/NoPage.tsx"
 import Login from "./pages/Login.tsx";
 import InGame from "./pages/InGame.tsx";
 import socket from "./WebSocket.tsx";
-import * as Constants from "./Constants.ts";
+import * as Constants from "./utils/Constants.ts";
 import NavigationBar from "./components/NavigationBar.tsx";
 
 function App() {

@@ -1,5 +1,5 @@
-import "./NavigationBar.css"
-import * as Constants from "../Constants.ts"
+import "./css/NavigationBar.css"
+import * as Constants from "../utils/Constants.ts"
 
 function NavigationBar() {
     function handleLogout() {

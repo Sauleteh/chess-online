@@ -1,0 +1,35 @@
+:root {
+    --square-size: 50px;
+}
+
+.chessboard-piece {
+    width: var(--square-size);
+    height: var(--square-size);
+}
+
+.chessboard-piece.light {
+    background-color: #f0d9b5;
+}
+
+.chessboard-piece.dark {
+    background-color: #b58863;
+}
+
+.chessboard-piece > img {
+    width: 100%;
+}
+
+.chessboard-row {
+    display: flex;
+}
+
+.chessboard-drag-square {
+    position: absolute;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 1;
+}
+
+.possible-move {
+    background-color: rgba(0, 255, 0, 0.5) !important;
+}

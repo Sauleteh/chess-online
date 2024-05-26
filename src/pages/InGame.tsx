@@ -1,14 +1,16 @@
 import socket from "../WebSocket.tsx"
 import { useParams } from "react-router-dom";
 import { useState } from 'react';
-import * as Constants from "../Constants.ts"
+import * as Constants from "../utils/Constants.ts"
 import ChessboardGame from "../components/ChessboardGame.tsx";
 import ChessboardChat from "../components/ChessboardChat.tsx";
 import { ChatMessage } from "../types/ChatMessage.ts";
+import { BoardInfo } from "../types/BoardInfo.ts";
 
 function InGame() {
     const { id } = useParams();
     const [messages, setMessages] = useState<ChatMessage[]>([]);
+    const [boardInfo, setBoardInfo] = useState<BoardInfo>();
 
     socket.onmessage = function (event) {
         const data = JSON.parse(event.data);
@@ -23,8 +25,7 @@ function InGame() {
         else if (data.type === "game" && window.location.pathname !== "/login" && data.code === 0) { // Si se recibe la información de la partida, mostrarla
             console.log("Partida:");
             console.log(data.content);
-
-            // TODO: Mostrar la partida
+            setBoardInfo(data.content);
 
             const whitePlayerName = document.getElementById("whitePlayerName") as HTMLSpanElement;
             const blackPlayerName = document.getElementById("blackPlayerName") as HTMLSpanElement;
@@ -102,7 +103,7 @@ function InGame() {
     return (
         <div>
             <h1>InGame: Estás en la partida {id}</h1>
-            <ChessboardGame/>
+            <ChessboardGame boardInfo={boardInfo}/>
             <label>Blancas: <span id="whitePlayerName"></span></label><button style={{display: 'none'}} id="whiteButton" onClick={() => requestJoin("white")}></button><br/>
             <label>Negras: <span id="blackPlayerName"></span></label><button style={{display: 'none'}} id="blackButton" onClick={() => requestJoin("black")}></button>
             <ChessboardChat chatMessages={messages} boardId={parseInt(id!)}/>

@@ -1,5 +1,5 @@
 import socket from "../WebSocket.tsx"
-import * as Constants from "../Constants.ts"
+import * as Constants from "../utils/Constants.ts"
 
 function Login() {
     socket.onmessage = function (event) {

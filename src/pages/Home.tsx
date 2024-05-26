@@ -1,5 +1,5 @@
 import socket from "../WebSocket.tsx"
-import * as Constants from "../Constants.ts"
+import * as Constants from "../utils/Constants.ts"
 import ChessboardPreview from "../components/ChessboardPreview.tsx"
 import { useState } from 'react';
 import { BoardInfo } from "../types/BoardInfo.ts";
