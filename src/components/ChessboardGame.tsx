@@ -12,10 +12,8 @@ function ChessboardGame({ boardInfo }: ChessboardGameProps) {
     const [draggingSourcePos, setDraggingSourcePos] = useState<{row: number, col: number}>({row: -1, col: -1}); // Posición inicial de la pieza que se está arrastrando
     const [draggingTarget, setDraggingTarget] = useState<HTMLDivElement | null>(null); // Elemento que está siendo arrastrado
 
-    const ghostSquare = document.querySelector(".chessboard-drag-square") as HTMLElement;
+    const ghostSquare = document.querySelector("#chessboard-drag-square") as HTMLElement;
     const squareSize = parseInt(getComputedStyle(document.body).getPropertyValue('--square-size').replace('px', ''));
-
-    
 
     function onDragStart(event: React.MouseEvent<HTMLDivElement>, row: number, col: number) {
         event.preventDefault();
@@ -29,10 +27,10 @@ function ChessboardGame({ boardInfo }: ChessboardGameProps) {
             setDraggingTarget(event.currentTarget);
 
             // Dibujar los posibles movimientos de la pieza
-            const moves = PieceUtils.getAllPossiblePositions(boardInfo!.board, row, col);
+            const moves = PieceUtils.getPossiblePositions(boardInfo!.board, row, col);
             const rows = document.querySelectorAll(".chessboard-row") as NodeListOf<HTMLElement>;
             moves.forEach(move => {
-                rows[move.row].children[move.col].classList.add("possible-move");
+                rows[move.row].children[move.col].insertBefore(createPossibleMoveSquare(), rows[move.row].children[move.col].firstChild);
             });
         }
     }
@@ -48,21 +46,31 @@ function ChessboardGame({ boardInfo }: ChessboardGameProps) {
             console.log("Dragged piece", boardInfo?.board[draggingSourcePos.row][draggingSourcePos.col], "from", draggingSourcePos, "to", {row, col});
             ghostSquare.innerHTML = "";
 
-            // TODO: Validar si el movimiento es válido
+            // Si el movimiento es válido, mover la pieza
+            if (PieceUtils.isValidMove(boardInfo!.board, draggingSourcePos, {row, col})) {
+                boardInfo!.board[row][col] = boardInfo!.board[draggingSourcePos.row][draggingSourcePos.col];
+                boardInfo!.board[draggingSourcePos.row][draggingSourcePos.col] = " ";
+            }
 
             (draggingTarget?.children[0] as HTMLImageElement).style.opacity = "1";
             setisDragging(false);
             setDraggingSourcePos({row: -1, col: -1});
             setDraggingTarget(null);
 
-            const squares = document.querySelectorAll(".chessboard-piece") as NodeListOf<HTMLElement>;
-            squares.forEach(square => square.classList.remove("possible-move"));
+            // Borramos los cuadrados que indican los movimientos posibles
+            document.querySelectorAll(".possible-move-square").forEach(square => square.remove());
         }
+    }
+
+    function createPossibleMoveSquare() {
+        const selectionSquare = document.createElement("div");
+        selectionSquare.classList.add("possible-move-square");
+        return selectionSquare;
     }
 
     return (
         <div>
-            <div className="chessboard-piece chessboard-drag-square"></div>
+            <div id="chessboard-drag-square" className="chessboard-piece"></div>
 
             {boardInfo?.board.map((row, rowIndex) => (
                 <div key={rowIndex} className="chessboard-row">

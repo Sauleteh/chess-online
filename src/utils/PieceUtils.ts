@@ -1,5 +1,4 @@
-import * as PieceMovement from "./movement/PieceMovement.ts";
-import * as PieceValidation from "./validation/PieceValidation.ts";
+import * as PieceMovement from "./PieceMovement.ts";
 
 import WhitePawnImg from "../assets/chess-pieces/white_pawn.png";
 import BlackPawnImg from "../assets/chess-pieces/black_pawn.png";
@@ -23,15 +22,6 @@ const moveHandlers = {
     k: PieceMovement.getKingMoves
 }
 
-const validationHandlers = {
-    p: PieceValidation.isValidPawnMove,
-    r: PieceValidation.isValidRookMove,
-    n: PieceValidation.isValidKnightMove,
-    b: PieceValidation.isValidBishopMove,
-    q: PieceValidation.isValidQueenMove,
-    k: PieceValidation.isValidKingMove
-}
-
 export function getPieceImage(piece: string) {
     switch (piece) {
         case "P": return WhitePawnImg;
@@ -50,8 +40,13 @@ export function getPieceImage(piece: string) {
     }
 }
 
-// Todas las posiciones posibles son aquellas que es capaz de hacer una pieza sin importar nada más que su posición, no se toma en cuenta si hay piezas enemigas o aliadas interponiéndose ni si el rey está en jaque
-export function getAllPossiblePositions(board: string[][], row: number, col: number): {row: number, col: number}[] {
+// Verifica si la pieza es del mismo color que el jugador
+export function isPieceSameColor(piece: string, pieceColor: string) {
+    return piece === (pieceColor === "white" ? piece.toUpperCase() : piece.toLowerCase());
+}
+
+// Todas las posiciones posibles son aquellas donde la pieza puede moverse
+export function getPossiblePositions(board: string[][], row: number, col: number): {row: number, col: number}[] {
     const piece = board[row][col];
     const pieceColor = piece === piece.toUpperCase() ? "white" : "black";
     
@@ -61,13 +56,13 @@ export function getAllPossiblePositions(board: string[][], row: number, col: num
     return [];
 }
 
-// Una posición válida es aquella en la que primero existe en la lista de posiciones posibles y además no hay ninguna pieza interponiéndose ni el rey está en jaque
+// Una posición válida es aquel movimiento que está dentro de las posiciones posibles
 export function isValidMove(board: string[][], from: {row: number, col: number}, to: {row: number, col: number}): boolean {
-    const piece = board[from.row][from.col];
-    const pieceColor = piece === piece.toUpperCase() ? "white" : "black";
-
-    const pieceType = piece.toLowerCase();
-    const handler = validationHandlers[pieceType];
-    if (handler) return handler(board, from, to, pieceColor);
+    const possiblePositions = getPossiblePositions(board, from.row, from.col);
+    for (const position of possiblePositions) {
+        if (position.row === to.row && position.col === to.col) {
+            return true;
+        }
+    }
     return false;
 }
