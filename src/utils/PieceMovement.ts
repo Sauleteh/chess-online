@@ -96,3 +96,25 @@ export function getBishopMoves(board: string[][], row: number, col: number, piec
     
     return possibleMoves;
 }
+
+export function getQueenMoves(board: string[][], row: number, col: number, pieceColor: string) {
+    return getRookMoves(board, row, col, pieceColor).concat(getBishopMoves(board, row, col, pieceColor));
+}
+
+export function getKingMoves(board: string[][], row: number, col: number, pieceColor: string) {
+    const possibleMoves = [];
+    const directions = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]]; // Moverse en ortogonal y diagonal una casilla
+
+    for (const direction of directions) {
+        const newRow = row + direction[0];
+        const newCol = col + direction[1];
+
+        if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+            if (board[newRow][newCol] === " " || !isPieceSameColor(board[newRow][newCol], pieceColor)) {
+                possibleMoves.push({row: newRow, col: newCol});
+            }
+        }
+    }
+
+    return possibleMoves;
+}

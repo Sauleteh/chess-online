@@ -13,13 +13,27 @@ import BlackQueenImg from "../assets/chess-pieces/black_queen.png";
 import WhiteKingImg from "../assets/chess-pieces/white_king.png";
 import BlackKingImg from "../assets/chess-pieces/black_king.png";
 
-const moveHandlers = {
+type PieceType = "p" | "r" | "n" | "b" | "q" | "k";
+const pieceTypes: string[] = ["p", "r", "n", "b", "q", "k"];
+interface MoveHandlers {
+    p: (board: string[][], row: number, col: number, pieceColor: string) => { row: number; col: number; }[];
+    r: (board: string[][], row: number, col: number, pieceColor: string) => { row: number; col: number; }[];
+    n: (board: string[][], row: number, col: number, pieceColor: string) => { row: number; col: number; }[];
+    b: (board: string[][], row: number, col: number, pieceColor: string) => { row: number; col: number; }[];
+    q: (board: string[][], row: number, col: number, pieceColor: string) => { row: number; col: number; }[];
+    k: (board: string[][], row: number, col: number, pieceColor: string) => { row: number; col: number; }[];
+}
+const moveHandlers: MoveHandlers = {
     p: PieceMovement.getPawnMoves,
     r: PieceMovement.getRookMoves,
     n: PieceMovement.getKnightMoves,
     b: PieceMovement.getBishopMoves,
     q: PieceMovement.getQueenMoves,
     k: PieceMovement.getKingMoves
+}
+
+function isPieceType(value: string): value is PieceType {
+    return pieceTypes.includes(value);
 }
 
 export function getPieceImage(piece: string) {
@@ -50,8 +64,8 @@ export function getPossiblePositions(board: string[][], row: number, col: number
     const piece = board[row][col];
     const pieceColor = piece === piece.toUpperCase() ? "white" : "black";
     
-    const pieceType = piece.toLowerCase();
-    const handler = moveHandlers[pieceType];
+    const pieceType: string = piece.toLowerCase();
+    const handler = isPieceType(pieceType) ? moveHandlers[pieceType] : undefined;
     if (handler) return handler(board, row, col, pieceColor);
     return [];
 }
