@@ -19,7 +19,8 @@ function ChessboardGame({ boardInfo }: ChessboardGameProps) {
 
     function onDragStart(event: React.MouseEvent<HTMLDivElement>, row: number, col: number) {
         event.preventDefault();
-        if (!selectedPieceIsPlayer(boardInfo!.board[row][col])) return;
+        if (!selectedPieceIsPlayer(boardInfo!.board[row][col]) || !isPlayerTurn()) return;
+        if (boardInfo?.white === null || boardInfo?.black === null) return; // Si no hay jugadores, no se puede mover ninguna pieza
 
         // Si anteriormente se ha seleccionado una pieza, borrar los cuadrados que indican los posibles movimientos
         if (clickState) document.querySelectorAll(".possible-move-square").forEach(square => square.remove());
@@ -71,7 +72,9 @@ function ChessboardGame({ boardInfo }: ChessboardGameProps) {
 
     function onClick(event: React.MouseEvent<HTMLDivElement>, row: number, col: number) {
         if (isDragging) return;
-        if (!clickState && !selectedPieceIsPlayer(boardInfo!.board[row][col])) return;
+        if (!clickState && !selectedPieceIsPlayer(boardInfo!.board[row][col])) return; // No se puede seleccionar las piezas que no son tuyas
+        if (boardInfo?.white === null || boardInfo?.black === null) return; // Si no hay jugadores, no se puede mover ninguna pieza
+        if (!isPlayerTurn()) return;
         
         if (!clickState || (clickState && selectedPieceIsPlayer(boardInfo!.board[row][col]))) {
             // Si anteriormente se ha seleccionado una pieza del jugador, borrar los cuadrados que indican los posibles movimientos
@@ -119,6 +122,10 @@ function ChessboardGame({ boardInfo }: ChessboardGameProps) {
         return (piece === piece.toLowerCase() ? boardInfo?.black : boardInfo?.white) === localStorage.getItem(Constants.STORAGE_KEYS.USERNAME);
     }
 
+    function isPlayerTurn() {
+        return boardInfo?.turn === localStorage.getItem(Constants.STORAGE_KEYS.USERNAME);
+    }
+
     return (
         <div>
             <div id="chessboard-drag-square" className="chessboard-piece"></div>
@@ -144,6 +151,5 @@ function ChessboardGame({ boardInfo }: ChessboardGameProps) {
 export default ChessboardGame;
 
 /** TODO list:
- * - Implementar los turnos
  * - Implementar el movimiento en el server para enviarlo a los demás jugadores
  */

@@ -11,6 +11,7 @@ function NavigationBar() {
     return (
         <div className="topnav">
             <a className="active" href="/">Inicio</a>
+            <a>Historial</a>
             <a onClick={handleLogout}>Cerrar sesión</a>
         </div>
     )
