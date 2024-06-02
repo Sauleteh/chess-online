@@ -31,6 +31,7 @@ function InGame() {
             const blackPlayerName = document.getElementById("blackPlayerName") as HTMLSpanElement;
             const whiteButton = document.getElementById("whiteButton") as HTMLSpanElement;
             const blackButton = document.getElementById("blackButton") as HTMLSpanElement;
+            const turnSpan = document.getElementById("turn") as HTMLSpanElement;
 
             whitePlayerName.innerText = data.content.white;
             blackPlayerName.innerText = data.content.black;
@@ -52,6 +53,8 @@ function InGame() {
                 else blackButton.innerHTML = "Unirse a partida"; // Si el usuario es solo observador, mostrar botón para unirse a la partida
             }
             else blackButton.style.display = "none";
+
+            turnSpan.innerText = data.content.turn;
         }
         else if (data.type === "chat" && window.location.pathname !== "/login" && data.code === 0) { // Si se recibe un mensaje de chat, mostrarlo
             console.log("Mensaje de chat:");
@@ -105,7 +108,8 @@ function InGame() {
             <h1>InGame: Estás en la partida {id}</h1>
             <ChessboardGame boardInfo={boardInfo}/>
             <label>Blancas: <span id="whitePlayerName"></span></label><button style={{display: 'none'}} id="whiteButton" onClick={() => requestJoin("white")}></button><br/>
-            <label>Negras: <span id="blackPlayerName"></span></label><button style={{display: 'none'}} id="blackButton" onClick={() => requestJoin("black")}></button>
+            <label>Negras: <span id="blackPlayerName"></span></label><button style={{display: 'none'}} id="blackButton" onClick={() => requestJoin("black")}></button><br/>
+            <label>Turno: </label><span id="turn"></span><br/>
             <ChessboardChat chatMessages={messages} boardId={parseInt(id!)}/>
         </div>
     )

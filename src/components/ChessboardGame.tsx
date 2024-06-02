@@ -2,7 +2,8 @@ import { BoardInfo } from "../types/BoardInfo.ts";
 import "./css/ChessboardGame.css";
 import { useState } from "react";
 import * as PieceUtils from "../utils/PieceUtils.ts";
-import * as Constants from "../utils/Constants.ts"
+import * as Constants from "../utils/Constants.ts";
+import socket from "../WebSocket.tsx";
 
 interface ChessboardGameProps {
     boardInfo: BoardInfo | undefined;
@@ -57,6 +58,19 @@ function ChessboardGame({ boardInfo }: ChessboardGameProps) {
             if (PieceUtils.isValidMove(boardInfo!.board, draggingSourcePos, {row, col})) {
                 boardInfo!.board[row][col] = boardInfo!.board[draggingSourcePos.row][draggingSourcePos.col];
                 boardInfo!.board[draggingSourcePos.row][draggingSourcePos.col] = " ";
+
+                // Actualizamos el movimiento en el servidor
+                const message = JSON.stringify({
+                    type: "game",
+                    name: localStorage.getItem(Constants.STORAGE_KEYS.USERNAME),
+                    pin: localStorage.getItem(Constants.STORAGE_KEYS.PIN),
+                    content: {
+                        id: boardInfo?.id,
+                        from: draggingSourcePos,
+                        to: {row, col}
+                    }
+                });
+                socket.send(message);
             }
 
             (draggingTarget?.children[0] as HTMLImageElement).style.opacity = "1";
@@ -98,8 +112,22 @@ function ChessboardGame({ boardInfo }: ChessboardGameProps) {
             if (PieceUtils.isValidMove(boardInfo!.board, draggingSourcePos, {row, col})) {
                 boardInfo!.board[row][col] = boardInfo!.board[draggingSourcePos.row][draggingSourcePos.col];
                 boardInfo!.board[draggingSourcePos.row][draggingSourcePos.col] = " ";
+
+                // Actualizamos el movimiento en el servidor
+                const message = JSON.stringify({
+                    type: "game",
+                    name: localStorage.getItem(Constants.STORAGE_KEYS.USERNAME),
+                    pin: localStorage.getItem(Constants.STORAGE_KEYS.PIN),
+                    content: {
+                        id: boardInfo?.id,
+                        from: draggingSourcePos,
+                        to: {row, col}
+                    }
+                });
+                socket.send(message);
             }
 
+            // Reseteamos el estado de la pieza seleccionada
             (draggingTarget?.children[0] as HTMLImageElement).style.opacity = "1";
             setClickState(false);
             setDraggingSourcePos({row: -1, col: -1});
@@ -149,7 +177,3 @@ function ChessboardGame({ boardInfo }: ChessboardGameProps) {
 }
 
 export default ChessboardGame;
-
-/** TODO list:
- * - Implementar el movimiento en el server para enviarlo a los demás jugadores
- */
