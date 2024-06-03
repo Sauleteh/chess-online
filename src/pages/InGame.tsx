@@ -61,6 +61,9 @@ function InGame() {
             console.log(data.content);
             setMessages(data.content.messages);
         }
+        else if (data.type === "game" && window.location.pathname !== "/login" && data.code === 1001) { // Si se recibe la confirmación de que se ha borrado la partida, redirigir a la página de inicio
+            window.location.href = "/";
+        }
     };
 
     function requestGame() {

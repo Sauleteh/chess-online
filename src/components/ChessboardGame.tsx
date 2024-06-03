@@ -45,6 +45,7 @@ function ChessboardGame({ boardInfo }: ChessboardGameProps) {
 
     function onMouseMove(event: React.MouseEvent<HTMLDivElement>) {
         // Movemos la posición del cuadrado fantasma
+        console.log(event.clientX, event.clientY, squareSize / 2);
         ghostSquare.style.top = event.clientY - squareSize / 2 + 'px';
         ghostSquare.style.left = event.clientX - squareSize / 2 + 'px';
     }
@@ -155,17 +156,17 @@ function ChessboardGame({ boardInfo }: ChessboardGameProps) {
     }
 
     return (
-        <div>
+        <div style={{display: "flex", flexDirection: boardInfo?.black === localStorage.getItem(Constants.STORAGE_KEYS.USERNAME) ? "column-reverse" : "column"}}>
             <div id="chessboard-drag-square" className="chessboard-piece"></div>
 
             {boardInfo?.board.map((row, rowIndex) => (
                 <div key={rowIndex} className="chessboard-row">
                     {row.map((piece, pieceIndex) => (
                         <div key={pieceIndex}
-                            onDragStart={(event) => onDragStart(event, rowIndex, pieceIndex)}
-                            onMouseMove={(event) => onMouseMove(event)}
-                            onMouseUp={() => onMouseUp(rowIndex, pieceIndex)}
-                            onClick={(event) => onClick(event, rowIndex, pieceIndex)}
+                            onDragStart={!boardInfo.isGameOver ? (event) => onDragStart(event, rowIndex, pieceIndex) : undefined}
+                            onMouseMove={!boardInfo.isGameOver ? (event) => onMouseMove(event) : undefined}
+                            onMouseUp={!boardInfo.isGameOver ? () => onMouseUp(rowIndex, pieceIndex) : undefined}
+                            onClick={!boardInfo.isGameOver ? (event) => onClick(event, rowIndex, pieceIndex) : undefined}
                             className={(pieceIndex + rowIndex) % 2 === 0 ? "chessboard-piece light" : "chessboard-piece dark"}>
                             <img src={PieceUtils.getPieceImage(piece)}/>
                         </div>

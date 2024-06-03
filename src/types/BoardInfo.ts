@@ -3,5 +3,6 @@ export interface BoardInfo {
     white: string;
     black: string;
     turn: string;
+    isGameOver: string;
     board: string[][];
 }
