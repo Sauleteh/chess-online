@@ -4,6 +4,7 @@ import Home from "./pages/Home.tsx"
 import NoPage from "./pages/NoPage.tsx"
 import Login from "./pages/Login.tsx";
 import InGame from "./pages/InGame.tsx";
+import History from "./pages/History.tsx";
 import socket from "./WebSocket.tsx";
 import * as Constants from "./utils/Constants.ts";
 import NavigationBar from "./components/NavigationBar.tsx";
@@ -45,6 +46,7 @@ function App() {
                 <Route path="/" element={<Home/>} />
                 <Route path="/login" element={<Login/>} />
                 <Route path="/board/:id" element={<InGame/>} />
+                <Route path="/history" element={<History/>} />
                 <Route path="*" element={<NoPage/>} />
             </Routes>
     </BrowserRouter>
