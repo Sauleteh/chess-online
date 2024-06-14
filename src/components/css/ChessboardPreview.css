@@ -1,0 +1,28 @@
+:root {
+    --square-prev-size: 25px;
+}
+
+.chessboard-prev-piece {
+    width: var(--square-prev-size);
+    height: var(--square-prev-size);
+}
+
+.chessboard-prev-piece.prev-light {
+    background-color: #f0d9b5;
+}
+
+.chessboard-prev-piece.prev-dark {
+    background-color: #b58863;
+}
+
+.chessboard-prev-piece > img {
+    width: 100%;
+}
+
+.chessboard-prev-row {
+    display: flex;
+}
+
+.board-prev-principal {
+    cursor: pointer;
+}
