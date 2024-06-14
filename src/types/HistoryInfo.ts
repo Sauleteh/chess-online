@@ -1,4 +1,4 @@
-export interface History {
+export interface HistoryInfo {
     date: string;
     white: string;
     black: string;

@@ -3,6 +3,7 @@ import * as Constants from "../utils/Constants.ts"
 import ChessboardPreview from "../components/ChessboardPreview.tsx"
 import { useState } from 'react';
 import { BoardInfo } from "../types/BoardInfo.ts";
+import "./css/Home.css";
 
 function Home() {
     const [chessboards, setChessboards] = useState<BoardInfo[]>([]);

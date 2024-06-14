@@ -2,10 +2,10 @@ import "./css/History.css";
 import socket from "../WebSocket.tsx";
 import { useState } from 'react';
 import * as Constants from "../utils/Constants.ts";
-import { History } from "../types/History.ts";
+import { HistoryInfo } from "../types/HistoryInfo.ts";
 
 function History() {
-    const [history, setHistory] = useState<History[]>([]);
+    const [history, setHistory] = useState<HistoryInfo[]>([]);
     socket.onmessage = function (event) {
         const data = JSON.parse(event.data);
         console.log("History");
