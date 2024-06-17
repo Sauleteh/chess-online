@@ -15,7 +15,7 @@ function Login() {
                     localStorage.setItem(Constants.STORAGE_KEYS.USERNAME, data.content.name);
                     localStorage.setItem(Constants.STORAGE_KEYS.PIN, data.content.pin);
                 }
-                window.location.href = "/";
+                window.location.href = Constants.BASE_URL + "/";
             }
             else {
                 status.innerText = "Error: " + data.content;

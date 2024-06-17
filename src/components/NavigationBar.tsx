@@ -6,7 +6,7 @@ function NavigationBar() {
     function handleLogout() {
         localStorage.removeItem(Constants.STORAGE_KEYS.USERNAME)
         localStorage.removeItem(Constants.STORAGE_KEYS.PIN)
-        window.location.href = "/login"
+        window.location.href = Constants.BASE_URL + "/login"
     }
 
     function setActiveWindow() {
@@ -28,8 +28,8 @@ function NavigationBar() {
 
     return (
         <div className="topnav">
-            <a href="/">Inicio</a>
-            <a href="/history">Historial</a>
+            <a href={Constants.BASE_URL}>Inicio</a>
+            <a href={Constants.BASE_URL + "/history"}>Historial</a>
             <a className="nav-logout" onClick={handleLogout}>Cerrar sesión</a>
         </div>
     )

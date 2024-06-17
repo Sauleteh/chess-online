@@ -11,9 +11,9 @@ function History() {
         console.log("History");
         console.log(data);
 
-        if (data.type === "login" && window.location.pathname !== "/login" && data.code !== 0) window.location.href = "/login"; // Si el usuario no es válido, redirigir a la página de login (mensaje recibido por comprobación de credenciales)
-        else if (data.type === "login" && window.location.pathname !== "/login" && data.code === 0) requestHistory(); // Si el usuario es válido, solicitar el historial de partidas (mensaje recibido por comprobación de credenciales)
-        else if (data.type === "history" && window.location.pathname !== "/login" && data.code === 0) { // Si se recibe el historial, se muestra
+        if (data.type === "login" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code !== 0) window.location.href = Constants.BASE_URL + "/login"; // Si el usuario no es válido, redirigir a la página de login (mensaje recibido por comprobación de credenciales)
+        else if (data.type === "login" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code === 0) requestHistory(); // Si el usuario es válido, solicitar el historial de partidas (mensaje recibido por comprobación de credenciales)
+        else if (data.type === "history" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code === 0) { // Si se recibe el historial, se muestra
             console.log("Historial:");
             console.log(data.content);
             setHistory(data.content);

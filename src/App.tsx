@@ -8,17 +8,18 @@ import History from "./pages/History.tsx";
 import socket from "./WebSocket.tsx";
 import * as Constants from "./utils/Constants.ts";
 import NavigationBar from "./components/NavigationBar.tsx";
+import { BASE_URL } from "./utils/Constants.ts";
 
 function App() {
     socket.onopen = function () {
         console.log("Connected to WebSocket server");
 
-        if (window.location.pathname !== "/login" &&
+        if (window.location.pathname !== BASE_URL + "/login" &&
         (localStorage.getItem(Constants.STORAGE_KEYS.USERNAME) === null || localStorage.getItem(Constants.STORAGE_KEYS.PIN) === null ||
         localStorage.getItem(Constants.STORAGE_KEYS.USERNAME) === undefined || localStorage.getItem(Constants.STORAGE_KEYS.PIN) === undefined ||
         localStorage.getItem(Constants.STORAGE_KEYS.USERNAME) === "" || localStorage.getItem(Constants.STORAGE_KEYS.PIN) === "")) {
             // Si no hay usuario en el almacenamiento local estando en cualquier página que no sea la de login, redirigir a la página de login
-            window.location.href = "/login";
+            window.location.href = BASE_URL + "/login";
         }
         else if (localStorage.getItem(Constants.STORAGE_KEYS.USERNAME) !== null && localStorage.getItem(Constants.STORAGE_KEYS.PIN) !== null &&
         localStorage.getItem(Constants.STORAGE_KEYS.USERNAME) !== undefined && localStorage.getItem(Constants.STORAGE_KEYS.PIN) !== undefined &&
@@ -40,15 +41,15 @@ function App() {
 
     return (
     <>
-    { window.location.pathname !== "/login" && <NavigationBar/> /* Solo aparece la barra de navegación si se está en el apartado de iniciar sesión */ }
-    <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home/>} />
-                <Route path="/login" element={<Login/>} />
-                <Route path="/board/:id" element={<InGame/>} />
-                <Route path="/history" element={<History/>} />
-                <Route path="*" element={<NoPage/>} />
-            </Routes>
+    { window.location.pathname !== BASE_URL + "/login" && <NavigationBar/> /* Solo aparece la barra de navegación si se está en el apartado de iniciar sesión */ }
+    <BrowserRouter basename={BASE_URL}>
+        <Routes>
+            <Route path="/" element={<Home/>} />
+            <Route path="/login" element={<Login/>} />
+            <Route path="/board/:id" element={<InGame/>} />
+            <Route path="/history" element={<History/>} />
+            <Route path="*" element={<NoPage/>} />
+        </Routes>
     </BrowserRouter>
     </>
     )

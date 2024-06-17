@@ -17,12 +17,12 @@ function InGame() {
         console.log("Home");
         console.log(data);
 
-        if (data.type === "login" && window.location.pathname !== "/login" && data.code !== 0) window.location.href = "/login"; // Si el usuario no es válido, redirigir a la página de login (mensaje recibido por comprobación de credenciales)
-        else if (data.type === "login" && window.location.pathname !== "/login" && data.code === 0) { // Si el usuario es válido, solicitar observar la partida y el chat
+        if (data.type === "login" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code !== 0) window.location.href = Constants.BASE_URL + "/login"; // Si el usuario no es válido, redirigir a la página de login (mensaje recibido por comprobación de credenciales)
+        else if (data.type === "login" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code === 0) { // Si el usuario es válido, solicitar observar la partida y el chat
             requestGame();
             requestChat();
         }
-        else if (data.type === "game" && window.location.pathname !== "/login" && data.code === 0) { // Si se recibe la información de la partida, mostrarla
+        else if (data.type === "game" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code === 0) { // Si se recibe la información de la partida, mostrarla
             console.log("Partida:");
             console.log(data.content);
             setBoardInfo(data.content);
@@ -56,13 +56,13 @@ function InGame() {
 
             turnSpan.innerText = data.content.turn;
         }
-        else if (data.type === "chat" && window.location.pathname !== "/login" && data.code === 0) { // Si se recibe un mensaje de chat, mostrarlo
+        else if (data.type === "chat" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code === 0) { // Si se recibe un mensaje de chat, mostrarlo
             console.log("Mensaje de chat:");
             console.log(data.content);
             setMessages(data.content.messages);
         }
-        else if (data.type === "game" && window.location.pathname !== "/login" && data.code === 1001) { // Si se recibe la confirmación de que se ha borrado la partida, redirigir a la página de inicio
-            window.location.href = "/";
+        else if (data.type === "game" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code === 1001) { // Si se recibe la confirmación de que se ha borrado la partida, redirigir a la página de inicio
+            window.location.href = Constants.BASE_URL + "/";
         }
     };
 

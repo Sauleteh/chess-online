@@ -1,6 +1,7 @@
 import { BoardInfo } from "../types/BoardInfo.ts";
 import "./css/ChessboardPreview.css";
 import * as PieceUtils from "../utils/PieceUtils.ts";
+import { BASE_URL } from "../utils/Constants.ts";
 
 interface ChessboardPreviewProps {
     boardInfo: BoardInfo;
@@ -9,7 +10,7 @@ interface ChessboardPreviewProps {
 function ChessboardPreview({ boardInfo }: ChessboardPreviewProps) {
     function joinGame() {
         console.log("Unirse a la partida " + boardInfo.id);
-        window.location.href = "/board/" + boardInfo.id;
+        window.location.href = BASE_URL + "/board/" + boardInfo.id;
     }
 
     return (

@@ -13,16 +13,16 @@ function Home() {
         console.log("Home");
         console.log(data);
 
-        if (data.type === "login" && window.location.pathname !== "/login" && data.code !== 0) window.location.href = "/login"; // Si el usuario no es válido, redirigir a la página de login (mensaje recibido por comprobación de credenciales)
-        else if (data.type === "login" && window.location.pathname !== "/login" && data.code === 0) requestBoards(); // Si el usuario es válido, solicitar la lista de tableros activos (mensaje recibido por comprobación de credenciales)
-        else if (data.type === "seek" && window.location.pathname !== "/login" && data.code === 0) { // Si se recibe una lista de tableros activos, mostrarla
+        if (data.type === "login" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code !== 0) window.location.href = Constants.BASE_URL + "/login"; // Si el usuario no es válido, redirigir a la página de login (mensaje recibido por comprobación de credenciales)
+        else if (data.type === "login" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code === 0) requestBoards(); // Si el usuario es válido, solicitar la lista de tableros activos (mensaje recibido por comprobación de credenciales)
+        else if (data.type === "seek" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code === 0) { // Si se recibe una lista de tableros activos, mostrarla
             console.log("Tableros activos:");
             console.log(data.content);
             setChessboards(data.content);
         }
-        else if (data.type === "create" && window.location.pathname !== "/login" && data.code === 0) { // Si se recibe un mensaje satisfactorio de creación de tablero, redirigir a la página del tablero creado
+        else if (data.type === "create" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code === 0) { // Si se recibe un mensaje satisfactorio de creación de tablero, redirigir a la página del tablero creado
             console.log("Tablero creado");
-            window.location.href = "/board/" + data.content.id;
+            window.location.href = Constants.BASE_URL + "/board/" + data.content.id;
         }
     };
 
