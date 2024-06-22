@@ -1,5 +1,5 @@
 :root {
-    --square-prev-size: 25px;
+    --square-prev-size: 28px;
 }
 
 .chessboard-prev-piece {
@@ -21,6 +21,7 @@
 
 .chessboard-prev-row {
     display: flex;
+    
 }
 
 .board-prev-principal {

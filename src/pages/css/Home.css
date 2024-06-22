@@ -1,11 +1,107 @@
-ul {
+body {
+    overflow-x: hidden;
+}
+
+.home-chessboard-list-container {
+    overflow: hidden;
+}
+
+ul.home-chessboard-list {
+    display: flex;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    background-color: #333;
+    overflow: none;
 }
 
-ul li {
-    display: inline;
+li.home-chessboard-list-item {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: #333;
+    border: 1px solid #252525;
+    padding: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+li.home-chessboard-list-item:hover {
+    background-color: #444;
+}
+
+li.home-chessboard-list-item + li.home-chessboard-list-item {
+    margin-left: 20px;
+}
+
+.home-chessboard-board {
+    margin: 10px;
+}
+
+.home-chessboard-info {
+    text-align: center;
+    font-size: 14px;
+    cursor: default;
+}
+
+.home-white-player {
+    color: rgb(232, 255, 224);
+    font-weight: bold;
+}
+
+.home-black-player {
+    color: rgb(109, 187, 85);
+    font-weight: bold;
+}
+
+.home-new-board-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.home-new-board-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #04AA6D;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.home-new-board-button:hover {
+    background-color: #04794e;
+}
+
+.home-new-board-button:active {
+    background-color: #045f41;
+}
+
+.home-new-board-button-icon {
+    margin-right: 10px;
+    width: 20px;
+    aspect-ratio: 1/1;
+    filter: invert(99%) sepia(0%) saturate(7479%) hue-rotate(224deg) brightness(118%) contrast(99%);
+}
+
+.home-new-board-button-text {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.home-title {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.home-explaining-text {
+    font-size: 16px;
+    color: #555;
+    text-align: center;
+    max-width: 800px;
+    margin: 20px auto;
 }

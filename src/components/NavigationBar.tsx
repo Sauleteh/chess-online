@@ -10,7 +10,6 @@ function NavigationBar() {
     }
 
     function setActiveWindow() {
-        console.log("NavigationBar", document.location.pathname);
         const links = document.querySelector(".topnav")?.getElementsByTagName("a");
 
         if (links !== undefined && links !== null) {

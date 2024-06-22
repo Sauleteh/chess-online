@@ -1,20 +1,14 @@
 import { BoardInfo } from "../types/BoardInfo.ts";
 import "./css/ChessboardPreview.css";
 import * as PieceUtils from "../utils/PieceUtils.ts";
-import { BASE_URL } from "../utils/Constants.ts";
 
 interface ChessboardPreviewProps {
     boardInfo: BoardInfo;
 }
 
 function ChessboardPreview({ boardInfo }: ChessboardPreviewProps) {
-    function joinGame() {
-        console.log("Unirse a la partida " + boardInfo.id);
-        window.location.href = BASE_URL + "/board/" + boardInfo.id;
-    }
-
     return (
-        <div className="board-prev-principal" onClick={joinGame}>
+        <div className="board-prev-principal">
         {boardInfo?.board.map((row, rowIndex) => (
             <div key={rowIndex} className="chessboard-prev-row">
                 {row.map((piece, pieceIndex) => (
