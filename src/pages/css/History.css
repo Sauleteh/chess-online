@@ -1,7 +1,51 @@
+.history-title {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 .history-winner {
     color: green;
+    font-weight: bold;
 }
 
 .history-loser {
     color: red;
+    font-weight: bold;
+}
+
+.history-date {
+    color: #888;
+    font-size: 14px;
+}
+
+.history-info {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+}
+
+ul.history-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li.history-list-item {
+    position: relative;
+    border-radius: 8px;
+    background-color: #333;
+    border: 1px solid #252525;
+    padding: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+li.history-list-item:hover {
+    background-color: #444;
+}
+
+li.history-list-item + li.history-list-item {
+    margin-top: 10px;
 }

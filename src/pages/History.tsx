@@ -32,23 +32,16 @@ function History() {
 
     return (
         <div>
-            <h1>Historial de partidas</h1>
-            <ul>
-                <li>
-                    <span>
-                        <span>Jugador blancas</span>
-                        &nbsp;vs&nbsp;
-                        <span>Jugador negras</span>
-                    </span>
-                </li>
+            <h1 className="history-title">Historial de partidas</h1>
+            <ul className="history-list">
                 {history.map((game, index) => (
-                    <li key={index}>
-                        <span>
-                            <span>{game.date}</span>&nbsp;
+                    <li key={index} className="history-list-item">
+                        <span className="history-date">{game.date}</span>
+                        <div className="history-info">
                             <span className={game.winner === game.white ? "history-winner" : "history-loser"}>{game.white}</span>
-                            &nbsp;vs&nbsp;
+                            &nbsp;vs.&nbsp;
                             <span className={game.winner === game.black ? "history-winner" : "history-loser"}>{game.black}</span>
-                        </span>
+                        </div>
                     </li>
                 ))}
             </ul>
