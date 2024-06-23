@@ -1,0 +1,97 @@
+.nopage-title {
+    font-size: 102px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.nopage-explanation {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.nopage-text {
+    font-size: 18px;
+    text-align: center;
+    width: 500px;
+    margin: auto;
+    margin-top: 40px;
+}
+
+.nopage-image {
+    display: block;
+    width: 100px;
+    margin: auto;
+    margin-top: 20px;
+    filter: sepia(72%) saturate(2000%) hue-rotate(0deg);
+    animation: imageAnim 5s infinite linear;
+}
+
+.nopage-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.nopage-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #04AA6D;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    animation: buttonAnim 3s infinite linear;
+    overflow: hidden;
+}
+
+.nopage-button:hover {
+    filter: brightness(0.8);
+}
+
+.nopage-button:active {
+    filter: brightness(0.6);
+}
+
+.nopage-button::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background-color: white;
+    top: -100%;
+    left: -120%;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: all 0s ease;
+}
+
+.nopage-button:hover::before {
+    left: 100%;
+    opacity: 0.7;
+    transition: all 0.5s ease;
+}
+
+@keyframes buttonAnim {
+    0% { background-color: #04AA6D; }
+    12% { background-color: #0797a1; }
+    24% { background-color: #064bb3; }
+    36% { background-color: #4309c9; }
+    48% { background-color: #b60b7d; }
+    60% { background-color: #b90b0b; }
+    72% { background-color: #b4870a; }
+    84% { background-color: #a5b60b; }
+    96% { background-color: #11ad26; }
+    100% { background-color: #04AA6D; }
+}
+
+@keyframes imageAnim {
+    0% { filter: sepia(72%) saturate(2000%) hue-rotate(0deg); }
+    100% { filter: sepia(72%) saturate(2000%) hue-rotate(360deg); }
+}
