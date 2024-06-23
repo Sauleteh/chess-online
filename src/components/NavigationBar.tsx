@@ -27,7 +27,7 @@ function NavigationBar() {
 
     return (
         <div className="topnav">
-            <a href={Constants.BASE_URL}>Inicio</a>
+            <a href={Constants.BASE_URL + "/home"}>Inicio</a>
             <a href={Constants.BASE_URL + "/history"}>Historial</a>
             <a className="nav-logout" onClick={handleLogout}>Cerrar sesión</a>
         </div>

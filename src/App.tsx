@@ -44,7 +44,7 @@ function App() {
     { window.location.pathname !== BASE_URL + "/login" && <NavigationBar/> /* Solo aparece la barra de navegación si se está en el apartado de iniciar sesión */ }
     <BrowserRouter basename={BASE_URL}>
         <Routes>
-            <Route path="/" element={<Home/>} />
+            <Route path="/home" element={<Home/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/board/:id" element={<InGame/>} />
             <Route path="/history" element={<History/>} />

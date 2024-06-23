@@ -62,7 +62,7 @@ function InGame() {
             setMessages(data.content.messages);
         }
         else if (data.type === "game" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code === 1001) { // Si se recibe la confirmación de que se ha borrado la partida, redirigir a la página de inicio
-            window.location.href = Constants.BASE_URL + "/";
+            window.location.href = Constants.BASE_URL + "/home";
         }
     };
 
