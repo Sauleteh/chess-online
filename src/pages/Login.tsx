@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import socket from "../WebSocket.tsx"
 import * as Constants from "../utils/Constants.ts"
+import "./css/Login.css"
 
 function Login() {
     socket.onmessage = function (event) {
@@ -7,7 +9,7 @@ function Login() {
         console.log("Login");
         console.log(data);
 
-        const status = document.getElementById("status") as HTMLLabelElement;
+        const status = document.getElementById("login-status") as HTMLLabelElement;
 
         if (data.type === "login") {
             if (data.code === 0) {
@@ -29,9 +31,15 @@ function Login() {
     };
     
     function sendUser() {
-        const username = document.getElementById("name") as HTMLInputElement;
-        const pin = document.getElementById("pin") as HTMLInputElement;
-        const status = document.getElementById("status") as HTMLLabelElement;
+        const username = document.getElementById("login-name") as HTMLInputElement;
+        const pin = document.getElementById("login-pin") as HTMLInputElement;
+        const status = document.getElementById("login-status") as HTMLLabelElement;
+
+        if (username.value === "" || pin.value === "") {
+            status.innerText = "Por favor, rellena todos los campos";
+            status.style.color = "royalblue";
+            return;
+        }
 
         const message = JSON.stringify({
             type: "login",
@@ -45,14 +53,30 @@ function Login() {
         status.style.color = "inherit";
     }
 
+    useEffect(() => {
+        const username = document.getElementById("login-name") as HTMLInputElement;
+        const pin = document.getElementById("login-pin") as HTMLInputElement;
+
+        username.addEventListener("input", function() {
+            username.value = username.value.replace(/\W/g, ""); // \W = [^a-zA-Z0-9_]
+        });
+
+        pin.addEventListener("input", function() {
+            pin.value = pin.value.replace(/\D/g, ""); // \D = [^0-9]
+        });
+    });
+
     return (
         <>
-        <label>Nombre</label><input id="name"/><br/>
-        <label>PIN</label><input id="pin"/><br/>
-        <button onClick={sendUser}>Entrar</button><br/>
-        <label id="status">Pulsa el botón para continuar...</label>
-        <br/><br/>
-        <label>Nota: Mientras existan tableros activos a tu nombre, tu cuenta se mantendrá en el servidor para que nadie toque tu partida pendiente.<br/>Cuando te vayas y no existan tableros en los que participes, tu cuenta se borrará.</label>
+        <div className="login-panel">
+            <label className="login-name-text">Nombre</label>
+            <input id="login-name" type="text" size={18} maxLength={12} />
+            <label className="login-pin-text">PIN</label>
+            <input id="login-pin" type="password" size={18} maxLength={24} />
+            <button onClick={sendUser} className="login-button">Entrar</button>
+            <label id="login-status" className="login-status-text">Pulsa el botón para continuar...</label>
+        </div>
+        <label className="login-note"><b>Nota</b>: Mientras existan tableros activos a tu nombre, tu cuenta se mantendrá en el servidor para que nadie toque tu partida pendiente. Cuando te vayas y no existan tableros en los que participes, <b>tu cuenta se borrará</b>.</label>
         </>
     )
 }
