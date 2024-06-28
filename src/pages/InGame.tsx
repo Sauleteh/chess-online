@@ -32,7 +32,6 @@ function InGame() {
             const blackPlayerName = document.getElementById("ingame-black-player-name") as HTMLSpanElement;
             const whiteButton = document.getElementById("ingame-white-button") as HTMLSpanElement;
             const blackButton = document.getElementById("ingame-black-button") as HTMLSpanElement;
-            const turnSpan = document.getElementById("ingame-turn") as HTMLSpanElement;
 
             whitePlayerName.innerText = data.content.white;
             blackPlayerName.innerText = data.content.black;
