@@ -6,6 +6,7 @@ import ChessboardGame from "../components/ChessboardGame.tsx";
 import ChessboardChat from "../components/ChessboardChat.tsx";
 import { ChatMessage } from "../types/ChatMessage.ts";
 import { BoardInfo } from "../types/BoardInfo.ts";
+import "./css/InGame.css";
 
 function InGame() {
     const { id } = useParams();
@@ -27,18 +28,18 @@ function InGame() {
             console.log(data.content);
             setBoardInfo(data.content);
 
-            const whitePlayerName = document.getElementById("whitePlayerName") as HTMLSpanElement;
-            const blackPlayerName = document.getElementById("blackPlayerName") as HTMLSpanElement;
-            const whiteButton = document.getElementById("whiteButton") as HTMLSpanElement;
-            const blackButton = document.getElementById("blackButton") as HTMLSpanElement;
-            const turnSpan = document.getElementById("turn") as HTMLSpanElement;
+            const whitePlayerName = document.getElementById("ingame-white-player-name") as HTMLSpanElement;
+            const blackPlayerName = document.getElementById("ingame-black-player-name") as HTMLSpanElement;
+            const whiteButton = document.getElementById("ingame-white-button") as HTMLSpanElement;
+            const blackButton = document.getElementById("ingame-black-button") as HTMLSpanElement;
+            const turnSpan = document.getElementById("ingame-turn") as HTMLSpanElement;
 
             whitePlayerName.innerText = data.content.white;
             blackPlayerName.innerText = data.content.black;
 
             if (data.content.white === null) {
                 whitePlayerName.innerText = "Esperando jugador...";
-                whiteButton.style.display = "block";
+                whiteButton.style.display = "flex";
 
                 if (data.content.black === localStorage.getItem(Constants.STORAGE_KEYS.USERNAME)) whiteButton.innerHTML = "Cambiar a blancas"; // Si el jugador es negras y no hay jugador en blancas...
                 else whiteButton.innerHTML = "Unirse a partida"; // Si el usuario es solo observador, mostrar botón para unirse a la partida
@@ -47,14 +48,25 @@ function InGame() {
 
             if (data.content.black === null) {
                 blackPlayerName.innerText = "Esperando jugador...";
-                blackButton.style.display = "block";
+                blackButton.style.display = "flex";
 
                 if (data.content.white === localStorage.getItem(Constants.STORAGE_KEYS.USERNAME)) blackButton.innerHTML = "Cambiar a negras"; // Si el jugador es blancas y no hay jugador en negras...
                 else blackButton.innerHTML = "Unirse a partida"; // Si el usuario es solo observador, mostrar botón para unirse a la partida
             }
             else blackButton.style.display = "none";
 
-            turnSpan.innerText = data.content.turn;
+            if (data.content.turn === data.content.white) {
+                whitePlayerName.style.fontWeight = "bold";
+                blackPlayerName.style.fontWeight = "normal";
+            }
+            else if (data.content.turn === data.content.black) {
+                whitePlayerName.style.fontWeight = "normal";
+                blackPlayerName.style.fontWeight = "bold";
+            }
+            else {
+                whitePlayerName.style.fontWeight = "normal";
+                blackPlayerName.style.fontWeight = "normal";
+            }
         }
         else if (data.type === "chat" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code === 0) { // Si se recibe un mensaje de chat, mostrarlo
             console.log("Mensaje de chat:");
@@ -108,12 +120,21 @@ function InGame() {
 
     return (
         <div>
-            <h1>InGame: Estás en la partida {id}</h1>
-            <ChessboardGame boardInfo={boardInfo}/>
-            <label>Blancas: <span id="whitePlayerName"></span></label><button style={{display: 'none'}} id="whiteButton" onClick={() => requestJoin("white")}></button><br/>
-            <label>Negras: <span id="blackPlayerName"></span></label><button style={{display: 'none'}} id="blackButton" onClick={() => requestJoin("black")}></button><br/>
-            <label>Turno: </label><span id="turn"></span><br/>
-            <ChessboardChat chatMessages={messages} boardId={parseInt(id!)}/>
+            <h1 className="ingame-title">Te encuentras en la sala Nº {id}</h1>
+            <div className="ingame-content">
+                <div className="ingame-game-container" style={{display: "flex", flexDirection: boardInfo?.black === localStorage.getItem(Constants.STORAGE_KEYS.USERNAME) ? "column-reverse" : "column"}}>
+                    <div className="ingame-black-player-container">
+                        <span id="ingame-black-player-name"></span>
+                        <button id="ingame-black-button" onClick={() => requestJoin("black")}></button>
+                    </div>
+                    <div className="ingame-chessboard"><ChessboardGame boardInfo={boardInfo}/></div>
+                    <div className="ingame-white-player-container">
+                        <span id="ingame-white-player-name"></span>
+                        <button id="ingame-white-button" onClick={() => requestJoin("white")}></button>
+                    </div>
+                </div>
+                <div className="ingame-chat"><ChessboardChat chatMessages={messages} boardId={parseInt(id!)}/></div>
+            </div>
         </div>
     )
 }

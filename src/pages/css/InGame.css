@@ -1,0 +1,58 @@
+.ingame-chessboard {
+    width: fit-content;
+}
+
+.ingame-title {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.ingame-game-container {
+    width: fit-content;
+}
+
+#ingame-black-player-name, #ingame-white-player-name {
+    font-size: 20px;
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#ingame-black-button, #ingame-white-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #04AA6D;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#ingame-black-button:hover, #ingame-white-button:hover {
+    background-color: #04794e;
+}
+
+#ingame-black-button:active, #ingame-white-button:active {
+    background-color: #045f41;
+}
+
+.ingame-black-player-container, .ingame-white-player-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.ingame-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 100px;
+    margin-right: 100px;
+}

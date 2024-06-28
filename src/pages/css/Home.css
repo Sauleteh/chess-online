@@ -8,6 +8,7 @@ ul.home-chessboard-list {
     margin: 0;
     padding: 0;
     overflow: none;
+    user-select: none;
 }
 
 li.home-chessboard-list-item {
