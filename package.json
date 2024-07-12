@@ -1,11 +1,12 @@
 {
   "name": "chess-online",
   "private": true,
+  "homepage": "https://sauleteh.gayofo.com/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build --base='./'",
+    "build": "tsc && vite build --base='/chess'",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "deploy": "sudo rm -rf /var/www/html/chess/* && npm run build && sudo cp -r dist/* /var/www/html/chess/"
