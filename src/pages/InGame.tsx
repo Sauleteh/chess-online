@@ -75,6 +75,9 @@ function InGame() {
         else if (data.type === "game" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code === 1001) { // Si se recibe la confirmación de que se ha borrado la partida, redirigir a la página de inicio
             window.location.href = Constants.BASE_URL + "/home";
         }
+        else if (data.type === "game" && window.location.pathname !== Constants.BASE_URL + "/login" && data.code === 1) { // Si no existe la partida, ir a página de error
+            window.location.href = Constants.BASE_URL + "/board"; // Redirigimos a board sin ID para que salte un 404
+        }
     };
 
     function requestGame() {
